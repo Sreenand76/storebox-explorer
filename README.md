@@ -140,7 +140,6 @@ npm run build
 - [ ] **Cut / Copy / Paste** — keyboard shortcuts `Ctrl+X`, `Ctrl+C`, `Ctrl+V`
 - [ ] **Multi-select** — `Shift+Click` and `Ctrl+Click` to select multiple nodes
 - [ ] **Context menu** — right-click menu mirroring VS Code's sidebar menu
-- [ ] **File type icons** — distinct icons for `.tsx`, `.css`, `.json`, `.md`, etc.
 - [ ] **Search / filter** — fuzzy search bar that highlights matching filenames
 - [ ] **Persistence** — save the tree to `localStorage` or a backend API
 - [ ] **Undo / redo** — `Ctrl+Z` support via a history stack
