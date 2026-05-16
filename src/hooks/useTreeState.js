@@ -10,13 +10,34 @@ import { INITIAL_TREE } from "../utils/initialData";
  */
 export function useTreeState() {
   const [tree, setTree] = useState(INITIAL_TREE);
+  const [error, setError] = useState(null);
+
+  const clearError = useCallback(() => setError(null), []);
 
   const insert = useCallback((parentId, node) => {
-    setTree((t) => insertNode(t, parentId, node));
+    let newError = null;
+    setTree((t) => {
+      try {
+        return insertNode(t, parentId, node);
+      } catch (err) {
+        newError = err.message;
+        return t;
+      }
+    });
+    if (newError) setError(newError);
   }, []);
 
   const rename = useCallback((id, name) => {
-    setTree((t) => renameNode(t, id, name));
+    let newError = null;
+    setTree((t) => {
+      try {
+        return renameNode(t, id, name);
+      } catch (err) {
+        newError = err.message;
+        return t;
+      }
+    });
+    if (newError) setError(newError);
   }, []);
 
   const remove = useCallback((id) => {
@@ -24,9 +45,18 @@ export function useTreeState() {
   }, []);
 
   const addToRoot = useCallback((type, name) => {
-    const node = type === "folder" ? makeFolder(name) : makeFile(name);
-    setTree((t) => [...t, node]);
+    let newError = null;
+    setTree((t) => {
+      
+      if (t.some((node) => node.name.toLowerCase() === name.toLowerCase())) {
+        newError = `A file or folder named "${name}" already exists at this location.`;
+        return t;
+      }
+      const node = type === "folder" ? makeFolder(name) : makeFile(name);
+      return [...t, node];
+    });
+    if (newError) setError(newError);
   }, []);
 
-  return { tree, insert, rename, remove, addToRoot };
+  return { tree, insert, rename, remove, addToRoot, error, clearError };
 }
