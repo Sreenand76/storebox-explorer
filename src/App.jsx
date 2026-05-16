@@ -1,6 +1,6 @@
 import { useTreeState } from "./hooks/useTreeState";
 import { Explorer } from "./components/Explorer";
-import { TitleBar } from "./components/Titlebar";
+import { TitleBar } from "./components/TitleBar";
 import { Modal } from "./components/Modal";
 
 /**
