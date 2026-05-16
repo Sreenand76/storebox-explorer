@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FilePlus, FolderPlus, Pencil, Trash2 } from "lucide-react";
+import { Modal } from "./Modal";
 
 export function NodeActions({
   isFolder,
@@ -42,40 +43,17 @@ export function NodeActions({
       </div>
 
       {showDeleteConfirm && (
-        <div
-          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40"
-          onClick={() => setShowDeleteConfirm(false)}
-        >
-          <div
-            className="w-72 rounded-lg border border-[#444] bg-[#252526] p-4 shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h3 className="text-sm font-semibold text-white">Delete item?</h3>
-
-            <p className="mt-2 text-xs text-[#cccccc]">
-              This action cannot be undone.
-            </p>
-
-            <div className="mt-4 flex justify-end gap-2">
-              <button
-                onClick={() => setShowDeleteConfirm(false)}
-                className="rounded bg-[#3a3a3a] px-3 py-1.5 text-xs text-[#cccccc] hover:bg-[#4a4a4a]"
-              >
-                Cancel
-              </button>
-
-              <button
-                onClick={() => {
-                  onDelete();
-                  setShowDeleteConfirm(false);
-                }}
-                className="rounded bg-red-600 px-3 py-1.5 text-xs text-white hover:bg-red-700"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
+        <Modal
+          title="Delete item?"
+          message="This action cannot be undone."
+          confirmText="Delete"
+          cancelText="Cancel"
+          onConfirm={() => {
+            onDelete();
+            setShowDeleteConfirm(false);
+          }}
+          onCancel={() => setShowDeleteConfirm(false)}
+        />
       )}
     </>
   );
