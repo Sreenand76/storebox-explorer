@@ -1,6 +1,7 @@
 import { useTreeState } from "./hooks/useTreeState";
 import { Explorer } from "./components/Explorer";
 import { TitleBar } from "./components/Titlebar";
+import { Modal } from "./components/Modal";
 
 /**
  * App
@@ -9,7 +10,7 @@ import { TitleBar } from "./components/Titlebar";
  * mutation callbacks down to Explorer.
  */
 export default function App() {
-  const { tree, insert, rename, remove, addToRoot } = useTreeState();
+  const { tree, insert, rename, remove, addToRoot, error, clearError } = useTreeState();
 
   return (
     <div className="min-h-screen bg-[#1e1e1e] flex items-center justify-center p-6">
@@ -29,6 +30,14 @@ export default function App() {
           />
         </div>
       </div>
+
+      {error && (
+        <Modal
+          title="Invalid Action"
+          message={error}
+          onConfirm={clearError}
+        />
+      )}
     </div>
   );
 }
